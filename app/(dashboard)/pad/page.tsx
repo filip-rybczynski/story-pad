@@ -1,11 +1,11 @@
 import PageHeader from "@/components/PageHeader/PageHeader";
 
-const HomePage = () => {
+const PadPage = () => {
   return (
     <div>
-      <PageHeader>Home page</PageHeader>
+      <PageHeader>Story Pad</PageHeader>
     </div>
   );
 };
 
-export default HomePage;
+export default PadPage;
