@@ -24,7 +24,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <ul className="flex items-center justify-start">
           {dashboardPages.map(({ href, label }) => (
             <li
-              className="px-4 py-2 hover:text-teal-700 hover:font-bold"
+              className="px-4 py-2 hover:text-teal-600 hover:font-bold"
               key={href}
             >
               <Link href={href}>{label}</Link>
