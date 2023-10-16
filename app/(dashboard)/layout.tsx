@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageLinkDetails } from "./types";
+import { UserButton } from "@clerk/nextjs";
 
 const dashboardPages: PageLinkDetails[] = [
   {
@@ -19,7 +20,7 @@ const dashboardPages: PageLinkDetails[] = [
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <nav>
+      <nav className="flex items-center justify-between">
         <ul className="flex items-center justify-start">
           {dashboardPages.map(({ href, label }) => (
             <li
@@ -30,6 +31,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             </li>
           ))}
         </ul>
+        <span className="px-4 py-2">
+          <UserButton afterSignOutUrl="/" />
+        </span>
       </nav>
       <div className="p-4">{children}</div>
     </>
