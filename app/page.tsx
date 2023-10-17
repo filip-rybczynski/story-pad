@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth } from "@clerk/nextjs";
+import { FancyButton } from "@/components";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -13,9 +14,7 @@ export default async function Home() {
           stories
         </p>
         <Link href={userId ? "/pad" : "/sign-in"}>
-          <button className="text-xl bg-teal-600 px-4 py-2 rounded-lg">
-            Get started
-          </button>
+          <FancyButton>Get started</FancyButton>
         </Link>
       </div>
     </main>
