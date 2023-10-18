@@ -4,8 +4,8 @@ import { UserButton } from "@clerk/nextjs";
 
 const dashboardPages: PageLinkDetails[] = [
   {
-    href: "/pad",
-    label: "Story pad",
+    href: "/stories",
+    label: "Stories",
   },
   {
     href: "/editor",

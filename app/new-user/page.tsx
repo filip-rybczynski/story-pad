@@ -21,7 +21,7 @@ const createNewUser = async () => {
     });
   }
 
-  redirect("/pad");
+  redirect("/stories");
 };
 
 const NewUser = async () => {

@@ -13,7 +13,7 @@ export default async function Home() {
           The best app for writing and getting quality AI analysis of your short
           stories
         </p>
-        <Link href={userId ? "/pad" : "/sign-in"}>
+        <Link href={userId ? "/stories" : "/sign-in"}>
           <FancyButton>Get started</FancyButton>
         </Link>
       </div>
