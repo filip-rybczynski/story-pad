@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             </li>
           ))}
         </ul>
-        <span className="px-4 py-2">
+        <span className="px-4 py-2 min-h-[48px]">
           <UserButton afterSignOutUrl="/" />
         </span>
       </nav>

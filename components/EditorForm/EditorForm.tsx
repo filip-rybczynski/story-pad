@@ -1,33 +1,30 @@
 "use client";
-
 import { FormEvent } from "react";
 import { PageHeader, FancyButton } from "@/components";
 import { prisma } from "@/utils/db";
 import { getUserByClerkID } from "@/utils/auth";
 import { User } from "@prisma/client";
+import { EditorFormProps } from "./EditorFormProps";
 
-const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+const EditorForm = ({ user, story }: EditorFormProps) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const user = (await getUserByClerkID()) as User; // will never be null here
+    const { title, story } = e.target as typeof e.target &
+      Record<"title" | "story", { value: string }>;
 
-  const { title, story } = e.target as typeof e.target &
-    Record<"title" | "story", { value: string }>;
+    console.log(
+      `The title of the story is ${title.value}, and it goes like this: ${story.value}`
+    );
 
-  console.log(
-    `The title of the story is ${title.value}, and it goes like this: ${story.value}`
-  );
-
-  await prisma.story.create({
-    data: {
-      userId: user.clerkId,
-      storyTitle: title.value,
-      storyContent: story.value,
-    },
-  });
-};
-
-const EditorPage = () => {
+    await prisma.story.create({
+      data: {
+        userId: user.clerkId,
+        storyTitle: title.value,
+        storyContent: story.value,
+      },
+    });
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -40,6 +37,7 @@ const EditorPage = () => {
         id="titleInput"
         name="title"
         type="text"
+        defaultValue={story?.storyTitle}
         className="w-[20rem] border-2 border-black/70 rounded-md"
       />
       <label htmlFor="storyInput" className="text-lg my-2">
@@ -50,6 +48,7 @@ const EditorPage = () => {
         name="story"
         className="w-full h-[50vh] border-2 border-black/70 rounded-md resize-none"
         placeholder="Write your story here!"
+        defaultValue={story?.storyContent}
       ></textarea>
       <div className="self-end my-3">
         <FancyButton type="submit">Save</FancyButton>
@@ -58,4 +57,4 @@ const EditorPage = () => {
   );
 };
 
-export default EditorPage;
+export default EditorForm;
