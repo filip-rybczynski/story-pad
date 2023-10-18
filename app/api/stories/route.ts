@@ -1,6 +1,5 @@
 import { getUserByClerkID } from "@/utils/auth";
 import { prisma } from "@/utils/db";
-import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export const POST = async () => {
@@ -10,7 +9,7 @@ export const POST = async () => {
     data: {
       userId: user.id,
       storyContent: "",
-      storyTitle: "",
+      storyTitle: "New Story",
     },
   });
 
