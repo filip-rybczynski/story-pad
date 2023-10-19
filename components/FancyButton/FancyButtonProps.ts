@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
 
-export type FancyButtonProps = {
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+export type FancyButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  secondary?: boolean;
 };
