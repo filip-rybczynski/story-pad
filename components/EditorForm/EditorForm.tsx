@@ -38,6 +38,7 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
       const { id } = await createNewStory(title.value, content.value);
       router.push(`/editor/${id}`);
     }
+    router.refresh();
     setIsSaving(false);
   };
   return (
