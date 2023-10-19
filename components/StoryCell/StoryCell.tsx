@@ -1,11 +1,13 @@
 import { truncate } from "@/utils";
 import Link from "next/link";
 import { StoryCellProps } from "./StoryCellProps";
+import DeleteButton from "./DeleteButton/DeleteButton";
 
 const StoryCell = ({ story }: StoryCellProps) => {
   return (
     <Link href={`/editor/${story.id}`}>
-      <article className="min-h-[200px] border-black/70 border-2 rounded-2xl px-6 py-4">
+      <article className="min-h-[200px] border-black/70 border-2 rounded-2xl px-6 py-4 relative">
+        <DeleteButton storyID={story.id} />
         <h2 className="text-2xl pb-4">{story.storyTitle}</h2>
         <p className="min-h-[100px] overflow-hidden">
           {truncate(story.storyContent, 150)}

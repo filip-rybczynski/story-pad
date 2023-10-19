@@ -23,3 +23,18 @@ export const PATCH = async (request: Request, { params }: PatchParams) => {
 
   return NextResponse.json(updatedStory);
 };
+
+export const DELETE = async (request: Request, { params }: PatchParams) => {
+  const user = (await getUserByClerkID()) as User;
+
+  const deletedStory = await prisma.story.delete({
+    where: {
+      userId_id: {
+        userId: user.id,
+        id: params.id,
+      },
+    },
+  })
+
+  return NextResponse.json(deletedStory);
+}
