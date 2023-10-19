@@ -1,17 +1,19 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FancyButton } from "@/components";
-import { prisma } from "@/utils/db";
 import { EditorFormProps } from "./EditorFormProps";
-import { updateStory } from "@/utils/api";
+import { createNewStory, updateStory } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 const EditorForm = ({ user, story }: EditorFormProps) => {
   const [storyData, setStoryData] = useState({
-    title: story?.storyTitle,
-    content: story?.storyContent,
+    title: story?.storyTitle || "",
+    content: story?.storyContent || "",
   });
 
   const [isSaving, setIsSaving] = useState(false);
+
+  const router = useRouter();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,6 +34,10 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
 
     setIsSaving(true);
     if (story) await updateStory(story.id, title.value, content.value);
+    else {
+      const { id } = await createNewStory(title.value, content.value);
+      router.push(`/editor/${id}`);
+    }
     setIsSaving(false);
   };
   return (
