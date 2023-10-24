@@ -34,5 +34,27 @@ model Story {
   storyTitle String
   storyContent String @db.Text
 
+  analysis Analysis?
+
   @@unique([userId, id])
+}
+
+model Analysis {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  storyId String
+  story Story @relation(fields: [storyId], references: [id])
+
+  synopsis String @db.Text
+  atmosphere String
+  atmosphereColor String
+  hasMoral Boolean
+  moral String? @db.Text
+  genreTags Json
+  keyWords Json
+  upliftingScore Float
+
+  @@unique([storyId])
 }

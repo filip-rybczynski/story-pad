@@ -1,12 +1,14 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FancyButton } from "@/components";
-import { EditorFormProps } from "./EditorFormProps";
-import { createNewStory, updateStory } from "@/utils/api";
+import { EditorFormProps } from "./types/EditorFormProps";
+import { createNewStory, getAnalysis, updateStory } from "@/utils/api";
 import { useRouter } from "next/navigation";
+import { StoryData } from "./types/StoryData.interface";
+import { analyze } from "@/utils/ai";
 
 const EditorForm = ({ user, story }: EditorFormProps) => {
-  const [storyData, setStoryData] = useState({
+  const [storyData, setStoryData] = useState<StoryData>({
     title: story?.storyTitle || "",
     content: story?.storyContent || "",
   });
@@ -24,6 +26,16 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
       ...storyData,
       [e.target.name]: newValue,
     });
+  };
+
+  const handleAnalyze = async (analysisData: StoryData) => {
+    console.log("sending API request!");
+    const response = await getAnalysis(
+      analysisData.title,
+      analysisData.content
+    );
+
+    console.table(response);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -69,6 +81,16 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
         onChange={handleChange}
       ></textarea>
       <div className="self-end my-3">
+        <FancyButton
+          type="button"
+          name="analyze"
+          onClick={() => {
+            console.log("click");
+            handleAnalyze(storyData);
+          }}
+        >
+          Analyze
+        </FancyButton>
         <FancyButton type="submit" name="save" disabled={isSaving}>
           Save
         </FancyButton>
