@@ -50,10 +50,9 @@ model Analysis {
   synopsis String @db.Text
   atmosphere String
   atmosphereColor String
-  hasMoral Boolean
   moral String? @db.Text
   genreTags Json
-  keyWords Json
+  keyThemes Json
   upliftingScore Float
 
   @@unique([storyId])

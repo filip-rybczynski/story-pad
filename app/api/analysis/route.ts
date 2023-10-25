@@ -1,4 +1,4 @@
-import { StoryData } from "@/components/EditorForm/types/StoryData.interface";
+import { StoryData } from "@/components/EditorWithAnalysis/components/EditorForm/types/StoryData.interface";
 import { analyze } from "@/utils/ai";
 import { NextResponse } from "next/server";
 

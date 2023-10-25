@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const zodPrompt = z.object({
-  synopsis: z.string().describe("one sentence synopsis of the plot"),
+  synopsis: z.string().describe("a synopsis of the story's plot, one sentence."),
   atmosphere: z
     .string()
     .describe(
@@ -26,7 +26,7 @@ export const zodPrompt = z.object({
   upliftingScore: z
     .number()
     .describe(
-      "a number representation of how uplifting the story is, between -5 and 5 inclusive, where -5 is extremely depressing, 0 is completely neutral and 5 is extremely uplifting."
+      "a number representation of how uplifting the story is for the reader, between -5 and 5 inclusive, where -5 is extremely depressing, 0 is completely neutral and 5 is extremely uplifting."
     ),
 });
 

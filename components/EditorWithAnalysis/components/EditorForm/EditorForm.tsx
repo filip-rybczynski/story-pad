@@ -2,17 +2,12 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FancyButton } from "@/components";
 import { EditorFormProps } from "./types/EditorFormProps";
-import { createNewStory, getAnalysis, updateStory } from "@/utils/api";
+import { createNewStory, performAnalysis, updateStory } from "@/utils/api";
 import { useRouter } from "next/navigation";
 import { StoryData } from "./types/StoryData.interface";
 import { analyze } from "@/utils/ai";
 
-const EditorForm = ({ user, story }: EditorFormProps) => {
-  const [storyData, setStoryData] = useState<StoryData>({
-    title: story?.storyTitle || "",
-    content: story?.storyContent || "",
-  });
-
+export const EditorForm = ({ content, setContent, handleSave }: EditorFormProps) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const router = useRouter();
@@ -22,35 +17,25 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
   ) => {
     const newValue = e.target.value;
 
-    setStoryData({
-      ...storyData,
+    setContent({
+      ...content,
       [e.target.name]: newValue,
     });
-  };
-
-  const handleAnalyze = async (analysisData: StoryData) => {
-    console.log("sending API request!");
-    const response = await getAnalysis(
-      analysisData.title,
-      analysisData.content
-    );
-
-    console.table(response);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { title, content } = e.target as typeof e.target &
-      Record<"title" | "content", { value: string }>;
+    const { storyTitle, storyContent } = e.target as typeof e.target &
+      Record<"storyTitle" | "storyContent", { value: string }>;
 
     setIsSaving(true);
-    if (story) await updateStory(story.id, title.value, content.value);
-    else {
-      const { id } = await createNewStory(title.value, content.value);
-      router.push(`/editor/${id}`);
-    }
+    await handleSave({
+      storyTitle: storyTitle.value,
+      storyContent: storyContent.value,
+    });
     router.refresh();
+
     setIsSaving(false);
   };
   return (
@@ -63,9 +48,9 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
       </label>
       <input
         id="titleInput"
-        name="title"
+        name="storyTitle"
         type="text"
-        value={storyData.title}
+        value={content.storyTitle}
         onChange={handleChange}
         className="w-[20rem] border-2 border-black/70 rounded-md"
       />
@@ -74,14 +59,14 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
       </label>
       <textarea
         id="storyInput"
-        name="content"
+        name="storyContent"
         className="w-full h-[50vh] border-2 border-black/70 rounded-md resize-none"
         placeholder="Write your story here!"
-        value={storyData.content}
+        value={content.storyContent}
         onChange={handleChange}
       ></textarea>
       <div className="self-end my-3">
-        <FancyButton
+        {/* <FancyButton
           type="button"
           name="analyze"
           onClick={() => {
@@ -90,7 +75,7 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
           }}
         >
           Analyze
-        </FancyButton>
+        </FancyButton> */}
         <FancyButton type="submit" name="save" disabled={isSaving}>
           Save
         </FancyButton>
@@ -102,4 +87,3 @@ const EditorForm = ({ user, story }: EditorFormProps) => {
   );
 };
 
-export default EditorForm;

@@ -1,19 +1,16 @@
 import { createURL } from ".";
-import { Analysis } from "../ai/promptSchema";
+import { Analysis } from "@prisma/client";
 
-export const getAnalysis = async (title: string, content: string) => {
-  console.log("test");
+export const getAnalysis = async (storyID: string) => {
   const res = await fetch(
-    new Request(createURL("/api/analysis"), {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        content,
-      }),
+    new Request(createURL(`/api/analysis/${storyID}`), {
+      method: "GET",
     })
   );
 
   if (res.ok) {
-    return (await res.json()) as Analysis;
+    const body = (await res.json()) as Analysis | null;
+
+    return body;
   } else throw new Error("oops");
 };
