@@ -11,7 +11,7 @@ const getStories = async () => {
       userId: id,
     },
     orderBy: {
-      createdAt: "desc",
+      updatedAt: "desc",
     },
   });
 };
