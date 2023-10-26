@@ -9,8 +9,8 @@ export const AnalysisDisplay = ({
   const showMoodScore = (score: number) => {
     let emoji = "😐";
 
-    if (score > 1) emoji = "😀";
-    if (score < 1) emoji = "😩";
+    if (score > 0) emoji = "😀";
+    if (score < 0) emoji = "😩";
 
     return (
       <div aria-label={score.toString()}>
@@ -50,7 +50,7 @@ export const AnalysisDisplay = ({
       </li>
       <li>
         <span className="font-bold">Moral: </span>{" "}
-        {analysis.moral === "NULL" ? "None" : analysis.moral}
+        {!analysis.moral ? "None" : analysis.moral}
       </li>
       <li>
         <span className="font-bold">Genre: </span>{" "}
