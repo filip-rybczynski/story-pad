@@ -1,7 +1,9 @@
-export const Loader = () => {
+export const Loader = ({secondary = false}) => {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="w-24 h-24 border-y-4 border-teal-600 rounded-full animate-spin"></div>
-    </div>
+      <div
+        className={`w-24 h-24 border-t-4 ${
+          secondary ? "border-white" : "border-teal-600"
+        }  rounded-full animate-spin`}
+      ></div>
   );
 };
