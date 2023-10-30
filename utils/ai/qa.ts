@@ -1,13 +1,9 @@
-import { EditableStory } from "@/app/(dashboard)/editor/[[...id]]/EditableStory.type";
-import { Story } from "@prisma/client";
 import { Document } from "langchain/document";
-import { getAnalysis } from "../api/getAnalysis";
 import { OpenAI } from "langchain/llms/openai";
-import { loadQAMapReduceChain, loadQARefineChain } from "langchain/chains";
+import { loadQARefineChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import {
-  AnalysisMetadata,
   AnalysisQuestionData,
   StoryQuestionData,
 } from "@/types/QuestionData";
@@ -24,7 +20,6 @@ export const qa = async (
   question: string,
   stories: StoryQuestionData[]
 ): Promise<string> => {
-  console.log("starting to create docs!");
   const docs = stories.map(
     (story) =>
       new Document({
@@ -55,9 +50,6 @@ export const qa = async (
     refinePrompt: storyPadRefinePrompt,
   });
 
-  // const mapChain = loadQAMapReduceChain(model)
-  // console.log(mapChain)
-
   const embeddings = new OpenAIEmbeddings(); // returns a function that allows a chain to create embeddings
 
   const store = await MemoryVectorStore.fromDocuments(
@@ -72,21 +64,19 @@ export const qa = async (
   const relevantDocs = relevantDocsWithScores
     .sort((docA, docB) => docA[1] - docB[1])
     .map((docWithScore) => docWithScore[0]);
-  console.log("🚀 ~ file: qa.ts:75 ~ relevantDocs:", relevantDocs);
 
-  const startTime = Date.now();
-  console.log('🚀 ~ file: qa.ts:78 ~ startTime:', startTime)
+  
+  try {
+    const res = await chain.call({
+      input_documents: relevantDocs,
+      question,
+      timeout: 60_000
+    });
 
-  console.log('calling chain!')
-  const res = await chain.call({
-    input_documents: relevantDocs,
-    question,
-  });
+    return res.output_text;
+  } catch(e) {
+    console.error(e);
+    return 'Apologies, I seem to have encountered an error! Please try again later!'
+  }
 
-  const timeElapsed = Date.now() - startTime;
-  console.log("🚀 ~ file: qa.ts:69 ~ timeElapsed:", timeElapsed);
-
-  console.log("finished calling chain");
-
-  return res.output_text;
 };
