@@ -2,7 +2,6 @@ import { createURL } from ".";
 import { Analysis } from "@prisma/client";
 
 export const getAnalysis = async (storyID: string) => {
-  console.log(storyID)
   const res = await fetch(
     new Request(createURL(`/api/analysis/${storyID}`), {
       method: "GET",

@@ -37,15 +37,6 @@ export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
     })();
   }, [storyID]);
 
-  useEffect(() => {
-    (async () => {
-      await updateAnalysis(
-        analysis as MyAnalysis,
-        storyID as string
-      );
-    })();
-  }, [analysis, storyID]);
-
   const handleAnalyze = async () => {
     setIsLoading(true);
     const newAnalysis = await performAnalysis(
@@ -54,6 +45,9 @@ export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
     );
 
     setAnalysis(newAnalysis);
+
+    await updateAnalysis(analysis as MyAnalysis, storyID as string);
+
     setIsLoading(false);
   };
 
@@ -78,7 +72,9 @@ export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
         )}
       </div>
       {!storyID ? (
-        <span className="inline-block text-red-500 ml-2 mt-2">Save your story first!</span>
+        <span className="inline-block text-red-500 ml-2 mt-2">
+          Save your story first!
+        </span>
       ) : null}
     </section>
   );
