@@ -1,5 +1,5 @@
 import { getUserByClerkID } from "@/utils/auth";
-import { StoryScoreChart } from "./StoryScoreChart/StoryScoreChart";
+import { UpliftHistoryChartSection } from "./UpliftHistoryChartSection/UpliftHistoryChartSection";
 import { prisma } from "@/utils/db";
 import { StoryWithAnalysis } from "./types/StoryWithAnalysis.interface";
 
@@ -31,14 +31,14 @@ const getStoriesWithAnalyses = async () => {
   });
 };
 
-export const StoryScoreChartDisplay = async () => {
+export const UpliftHistory = async () => {
   const storiesWithAnalyses =
     (await getStoriesWithAnalyses()) as StoryWithAnalysis[]; // Based on the Prisma query, we can be sure that there won't be a story with a NULL analysis, contrary to Typescript's inference
 
   return (
     <section className="h-[600px]">
-      <h3 className="text-xl">How uplifting have my stories been?</h3>
-      <StoryScoreChart data={storiesWithAnalyses} />
+      <h2 className="text-2xl">How uplifting have my stories been?</h2>
+      <UpliftHistoryChartSection data={storiesWithAnalyses} />
     </section>
   );
 };

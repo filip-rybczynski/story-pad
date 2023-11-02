@@ -1,11 +1,11 @@
 import { QuestionForm } from "./components";
-import { StoryScoreChartDisplay } from "./components/StoryScoreChartDisplay";
+import { UpliftHistory } from "./components/UpliftHistory";
 
 function AnalysisPage() {
   return (
     <>
       <QuestionForm />
-      <StoryScoreChartDisplay />
+      <UpliftHistory />
     </>
   );
 }
