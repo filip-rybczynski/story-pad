@@ -21,6 +21,7 @@ const getStoriesWithAnalyses = async () => {
         select: {
           upliftingScore: true,
           atmosphereColor: true,
+          atmosphere: true,
         },
       },
     },
@@ -36,9 +37,7 @@ export const StoryScoreChartDisplay = async () => {
 
   return (
     <section className="h-[600px]">
-      <h3 className="text-xl">
-      History of uplifting scores
-        </h3>
+      <h3 className="text-xl">How uplifting have my stories been?</h3>
       <StoryScoreChart data={storiesWithAnalyses} />
     </section>
   );
