@@ -43,10 +43,21 @@ export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
       story.storyTitle,
       story.storyContent
     );
+    console.log(
+      "🚀 ~ file: AnalysisSidebar.tsx:47 ~ handleAnalyze ~ newAnalysis:",
+      newAnalysis
+    );
 
     setAnalysis(newAnalysis);
 
-    await updateAnalysis(analysis as MyAnalysis, storyID as string);
+    const test = await updateAnalysis(
+      newAnalysis as MyAnalysis,
+      storyID as string
+    );
+    console.log(
+      "🚀 ~ file: AnalysisSidebar.tsx:52 ~ handleAnalyze ~ test:",
+      test
+    );
 
     setIsLoading(false);
   };

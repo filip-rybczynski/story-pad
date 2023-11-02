@@ -1,21 +1,11 @@
-import {
-  AnalysisContent,
-  FormattedAnalysisContent,
-} from "@/types/AnalysisContent";
+import { AnalysisContent } from "@/types/AnalysisContent";
 import { prisma } from "@/utils/db";
 import { NextResponse } from "next/server";
 
 type ReqParams = { params: { id: string } };
 
 export const PATCH = async (request: Request, { params }: ReqParams) => {
-  console.log("inside the route!");
-  const analysis = (await request.json()) as AnalysisContent;
-
-  //   const formattedAnalysis: FormattedAnalysisContent = {
-  //     ...analysis,
-  //     genreTags: JSON.stringify(analysis.genreTags),
-  //     keyThemes: JSON.stringify(analysis.keyThemes),
-  //   };
+  const analysis = await request.json();
 
   const updatedStory = await prisma.analysis.upsert({
     where: {
@@ -23,10 +13,10 @@ export const PATCH = async (request: Request, { params }: ReqParams) => {
     },
     create: {
       storyId: params.id,
-      ...analysis,
+      ...(analysis as AnalysisContent),
     },
     update: {
-      ...analysis,
+      ...(analysis as AnalysisContent),
     },
   });
 
@@ -34,7 +24,7 @@ export const PATCH = async (request: Request, { params }: ReqParams) => {
 };
 
 export const GET = async (req: Request, { params }: ReqParams) => {
-  console.log('searching for analysis!')
+  console.log("searching for analysis!");
   const analysis = await prisma.analysis.findUnique({
     where: {
       storyId: params.id,
