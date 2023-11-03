@@ -1,9 +1,10 @@
 import { EditableStory } from "@/app/(dashboard)/editor/[[...id]]/EditableStory.type";
-import { Story, User } from "@prisma/client";
-import { Dispatch, SetStateAction } from "react";
+import { ChangeEvent } from "react";
 
 export interface EditorFormProps {
   content: EditableStory;
-  setContent: Dispatch<SetStateAction<EditableStory>>;
-  handleSave: (content: EditableStory) => Promise<void>
+  handleSave: (content: EditableStory) => Promise<void>;
+  handleChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }

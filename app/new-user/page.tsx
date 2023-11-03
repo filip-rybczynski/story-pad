@@ -25,7 +25,6 @@ const createNewUser = async () => {
 };
 
 const NewUser = async () => {
-  console.log("start");
   await createNewUser();
   return null;
 };

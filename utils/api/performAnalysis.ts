@@ -2,7 +2,6 @@ import { createURL } from ".";
 import { Analysis } from "../ai/promptSchema";
 
 export const performAnalysis = async (title: string, content: string) => {
-  console.log("test");
   const res = await fetch(
     new Request(createURL("/api/analysis"), {
       method: "POST",

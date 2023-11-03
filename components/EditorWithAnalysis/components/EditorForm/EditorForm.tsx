@@ -1,27 +1,17 @@
 "use client";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { FancyButton } from "@/components";
 import { EditorFormProps } from "./types/EditorFormProps";
-import { createNewStory, performAnalysis, updateStory } from "@/utils/api";
 import { useRouter } from "next/navigation";
-import { StoryData } from "./types/StoryData.interface";
-import { analyze } from "@/utils/ai";
 
-export const EditorForm = ({ content, setContent, handleSave }: EditorFormProps) => {
+export const EditorForm = ({
+  content,
+  handleSave,
+  handleChange,
+}: EditorFormProps) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const router = useRouter();
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const newValue = e.target.value;
-
-    setContent({
-      ...content,
-      [e.target.name]: newValue,
-    });
-  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,24 +56,10 @@ export const EditorForm = ({ content, setContent, handleSave }: EditorFormProps)
         onChange={handleChange}
       ></textarea>
       <div className="self-end my-3">
-        {/* <FancyButton
-          type="button"
-          name="analyze"
-          onClick={() => {
-            console.log("click");
-            handleAnalyze(storyData);
-          }}
-        >
-          Analyze
-        </FancyButton> */}
         <FancyButton type="submit" name="save" disabled={isSaving}>
           Save
         </FancyButton>
-        {/* <FancyButton type="submit" name="save_and_close">
-          Save and Close
-        </FancyButton> */}
       </div>
     </form>
   );
 };
-

@@ -28,7 +28,6 @@ export const POST = async (request: Request) => {
   });
 
   const answer = await qa(question, stories);
-  console.log('🚀 ~ file: route.ts:31 ~ POST ~ answer:', answer)
 
   return NextResponse.json(answer);
 };

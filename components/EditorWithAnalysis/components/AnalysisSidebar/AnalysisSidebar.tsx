@@ -1,6 +1,6 @@
 "use client";
 
-import { FancyButton, Loader } from "@/components";
+import { FancyButton } from "@/components";
 import { AnalysisSidebarProps } from "./AnalysisSidebarProps";
 import { useEffect, useState } from "react";
 import { performAnalysis } from "@/utils/api";
@@ -18,7 +18,11 @@ type MyAnalysis = {
   upliftingScore: number;
 };
 
-export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
+export const AnalysisSidebar = ({
+  story,
+  storyID,
+  isStorySaved,
+}: AnalysisSidebarProps) => {
   const [analysis, setAnalysis] = useState<MyAnalysis>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,20 +47,12 @@ export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
       story.storyTitle,
       story.storyContent
     );
-    console.log(
-      "🚀 ~ file: AnalysisSidebar.tsx:47 ~ handleAnalyze ~ newAnalysis:",
-      newAnalysis
-    );
 
     setAnalysis(newAnalysis);
 
     const test = await updateAnalysis(
       newAnalysis as MyAnalysis,
       storyID as string
-    );
-    console.log(
-      "🚀 ~ file: AnalysisSidebar.tsx:52 ~ handleAnalyze ~ test:",
-      test
     );
 
     setIsLoading(false);
@@ -68,7 +64,7 @@ export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
       <AnalysisDisplay analysis={analysis} />
       <div className="flex items-center mt-3">
         <FancyButton
-          disabled={isLoading || !storyID || !story.storyContent}
+          disabled={isLoading || !isStorySaved}
           type="button"
           onClick={handleAnalyze}
         >
@@ -82,7 +78,7 @@ export const AnalysisSidebar = ({ story, storyID }: AnalysisSidebarProps) => {
           ></span>
         )}
       </div>
-      {!storyID ? (
+      {!isStorySaved ? (
         <span className="inline-block text-red-500 ml-2 mt-2">
           Save your story first!
         </span>

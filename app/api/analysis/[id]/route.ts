@@ -24,14 +24,11 @@ export const PATCH = async (request: Request, { params }: ReqParams) => {
 };
 
 export const GET = async (req: Request, { params }: ReqParams) => {
-  console.log("searching for analysis!");
   const analysis = await prisma.analysis.findUnique({
     where: {
       storyId: params.id,
     },
   });
-
-  console.log(analysis);
 
   return NextResponse.json(analysis);
 };
