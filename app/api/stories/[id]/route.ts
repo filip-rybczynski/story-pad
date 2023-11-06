@@ -34,7 +34,7 @@ export const DELETE = async (request: Request, { params }: PatchParams) => {
         id: params.id,
       },
     },
-  })
+  });
 
   return NextResponse.json(deletedStory);
-}
+};
