@@ -14,7 +14,7 @@ const EditorWithAnalysis = ({
     storyTitle,
     storyContent,
   });
-  const [isStorySaved, setIsStorySaved] = useState(false);
+  const [isStorySaved, setIsStorySaved] = useState(true);
 
   const router = useRouter();
 

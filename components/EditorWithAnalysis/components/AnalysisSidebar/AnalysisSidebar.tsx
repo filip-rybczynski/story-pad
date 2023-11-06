@@ -64,7 +64,7 @@ export const AnalysisSidebar = ({
       <AnalysisDisplay analysis={analysis} />
       <div className="flex items-center mt-3">
         <FancyButton
-          disabled={isLoading || !isStorySaved}
+          disabled={isLoading || !isStorySaved || !story.storyContent}
           type="button"
           onClick={handleAnalyze}
         >
@@ -78,6 +78,11 @@ export const AnalysisSidebar = ({
           ></span>
         )}
       </div>
+      {!story.storyContent ? (
+        <span className="inline-block text-red-500 ml-2 mt-2">
+          Please write a story first!
+        </span>
+      ) : null}
       {!isStorySaved ? (
         <span className="inline-block text-red-500 ml-2 mt-2">
           Save your story first!
