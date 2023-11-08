@@ -28,6 +28,7 @@ export const analyze = async (title: string, story: string) => {
   const prompt = await getPrompt(title, story);
   const model = new OpenAI({ temperature: 0, modelName: "gpt-3.5-turbo" });
   const response = await model.call(prompt);
+  console.log('🚀 ~ file: analyze.ts:31 ~ analyze ~ response:', response)
 
   try {
     return parser.parse(response);

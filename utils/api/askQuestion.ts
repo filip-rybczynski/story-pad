@@ -12,5 +12,8 @@ export const askQuestion = async (question: string) => {
 
   if (res.ok) {
     return (await res.json()) as string;
-  } else throw new Error("oops");
+  } else {
+    console.log("🚀 ~ file: askQuestion.ts:12 ~ askQuestion ~ res:", res);
+    throw new Error("Failed to ask the question");
+  }
 };

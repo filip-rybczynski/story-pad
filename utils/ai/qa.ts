@@ -3,10 +3,7 @@ import { OpenAI } from "langchain/llms/openai";
 import { loadQARefineChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import {
-  AnalysisQuestionData,
-  StoryQuestionData,
-} from "@/types/QuestionData";
+import { AnalysisQuestionData, StoryQuestionData } from "@/types/QuestionData";
 import {
   getContentFromStoryData,
   summarizeAnalysis,
@@ -65,18 +62,18 @@ export const qa = async (
     .sort((docA, docB) => docA[1] - docB[1])
     .map((docWithScore) => docWithScore[0]);
 
-  
   try {
     const res = await chain.call({
       input_documents: relevantDocs,
       question,
-      timeout: 60_000
+      timeout: 60_000,
     });
+    console.log("🚀 ~ file: qa.ts:75 ~ res:", res);
 
     return res.output_text;
-  } catch(e) {
-    console.error(e);
-    return 'Apologies, I seem to have encountered an error! Please try again later!'
-  }
+  } catch (e) {
+    console.log("🚀 ~ file: qa.ts:79 ~ e:", e);
 
+    return "Apologies, I seem to have encountered an error! Please try again later!";
+  }
 };
